@@ -31,7 +31,7 @@ export default function RegisterPage() {
   const [step, setStep] = useState(1)          // step 1 = role pick, step 2 = details
   const [form, setForm] = useState({
     role: '',
-    username: '',
+    full_name: '',
     email: '',
     password: '',
     password2: '',
@@ -59,7 +59,7 @@ export default function RegisterPage() {
     setError('')
     try {
       await api.post('/api/auth/register/', {
-        username: form.email,
+        full_name: form.full_name,
         email: form.email,
         password: form.password,
         password2: form.password2,
@@ -84,28 +84,28 @@ export default function RegisterPage() {
   }
 
   return (
-    <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
+    <div className="ff-card ff-card-elevated p-8">
       {step === 1 ? (
         <>
-          <h2 className="text-2xl font-semibold text-gray-900 mb-1">Create an account</h2>
-          <p className="text-sm text-gray-500 mb-7">Choose how you&apos;ll use FashionFlow</p>
+          <h2 className="mb-1 text-2xl font-semibold ff-text-primary">Create an account</h2>
+          <p className="mb-7 text-sm ff-text-secondary">Choose how you&apos;ll use FashionFlow</p>
 
           <div className="space-y-3">
             {ROLES.map((r) => (
               <button
                 key={r.value}
                 onClick={() => selectRole(r.value)}
-                className="w-full flex items-center gap-4 p-4 rounded-xl border-2 border-gray-100 hover:border-[#1a1a2e] transition text-left group"
+                className="ff-card w-full p-4 text-left transition duration-200 hover:border-[color:var(--ff-primary)]"
               >
                 <span className="text-2xl">{r.icon}</span>
                 <div>
-                  <p className="text-sm font-semibold text-gray-900 group-hover:text-[#1a1a2e]">
+                  <p className="text-sm font-semibold ff-text-primary">
                     {r.label}
                   </p>
-                  <p className="text-xs text-gray-400">{r.desc}</p>
+                  <p className="text-xs ff-text-secondary">{r.desc}</p>
                 </div>
                 <svg
-                  className="ml-auto w-4 h-4 text-gray-300 group-hover:text-[#1a1a2e] transition"
+                  className="ml-auto h-4 w-4 ff-text-secondary"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -116,9 +116,9 @@ export default function RegisterPage() {
             ))}
           </div>
 
-          <p className="mt-6 text-center text-sm text-gray-500">
+          <p className="mt-6 text-center text-sm ff-text-secondary">
             Already have an account?{' '}
-            <Link href="/auth/login" className="font-medium text-gray-900 hover:underline">
+            <Link href="/auth/login" className="ff-link font-medium hover:underline">
               Sign in
             </Link>
           </p>
@@ -127,7 +127,7 @@ export default function RegisterPage() {
         <>
           <button
             onClick={() => setStep(1)}
-            className="flex items-center gap-1.5 text-sm text-gray-400 hover:text-gray-700 mb-6 transition"
+            className="mb-6 flex items-center gap-1.5 text-sm ff-text-secondary transition hover:text-[color:var(--ff-primary)]"
           >
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -135,28 +135,29 @@ export default function RegisterPage() {
             Back
           </button>
 
-          <h2 className="text-2xl font-semibold text-gray-900 mb-1">Your details</h2>
-          <p className="text-sm text-gray-500 mb-7">
+          <h2 className="mb-1 text-2xl font-semibold ff-text-primary">Your details</h2>
+          <p className="mb-7 text-sm ff-text-secondary">
             Joining as a{' '}
-            <span className="font-medium capitalize text-gray-800">{form.role}</span>
+            <span className="font-medium capitalize ff-text-primary">{form.role}</span>
           </p>
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1.5">Full name</label>
+              <label className="mb-1.5 block text-sm font-medium ff-text-primary">Full name</label>
               <input
                 type="text"
-                name="username"
+                name="full_name"
                 required
-                value={form.username}
+                autoComplete="name"
+                value={form.full_name}
                 onChange={handleChange}
                 placeholder="Ada Okonkwo"
-                className="w-full px-3.5 py-2.5 rounded-lg border border-gray-300 text-sm focus:outline-none focus:ring-2 focus:ring-[#1a1a2e] focus:border-transparent transition"
+                className="ff-input px-3.5 py-2.5 text-sm"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1.5">Email address</label>
+              <label className="mb-1.5 block text-sm font-medium ff-text-primary">Email address</label>
               <input
                 type="email"
                 name="email"
@@ -164,12 +165,12 @@ export default function RegisterPage() {
                 value={form.email}
                 onChange={handleChange}
                 placeholder="you@example.com"
-                className="w-full px-3.5 py-2.5 rounded-lg border border-gray-300 text-sm focus:outline-none focus:ring-2 focus:ring-[#1a1a2e] focus:border-transparent transition"
+                className="ff-input px-3.5 py-2.5 text-sm"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1.5">Password</label>
+              <label className="mb-1.5 block text-sm font-medium ff-text-primary">Password</label>
               <input
                 type="password"
                 name="password"
@@ -178,12 +179,12 @@ export default function RegisterPage() {
                 value={form.password}
                 onChange={handleChange}
                 placeholder="At least 8 characters"
-                className="w-full px-3.5 py-2.5 rounded-lg border border-gray-300 text-sm focus:outline-none focus:ring-2 focus:ring-[#1a1a2e] focus:border-transparent transition"
+                className="ff-input px-3.5 py-2.5 text-sm"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1.5">Confirm password</label>
+              <label className="mb-1.5 block text-sm font-medium ff-text-primary">Confirm password</label>
               <input
                 type="password"
                 name="password2"
@@ -191,12 +192,12 @@ export default function RegisterPage() {
                 value={form.password2}
                 onChange={handleChange}
                 placeholder="••••••••"
-                className="w-full px-3.5 py-2.5 rounded-lg border border-gray-300 text-sm focus:outline-none focus:ring-2 focus:ring-[#1a1a2e] focus:border-transparent transition"
+                className="ff-input px-3.5 py-2.5 text-sm"
               />
             </div>
 
             {error && (
-              <div className="bg-red-50 border border-red-100 text-red-600 text-sm rounded-lg px-3.5 py-2.5">
+              <div className="ff-alert px-3.5 py-2.5 text-sm">
                 {error}
               </div>
             )}
@@ -204,16 +205,15 @@ export default function RegisterPage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-2.5 rounded-lg text-sm font-semibold text-white transition disabled:opacity-60"
-              style={{ background: 'var(--brand)' }}
+              className="ff-btn-primary w-full py-2.5 text-sm font-semibold"
             >
               {loading ? 'Creating account…' : 'Create account'}
             </button>
           </form>
 
-          <p className="mt-6 text-center text-sm text-gray-500">
+          <p className="mt-6 text-center text-sm ff-text-secondary">
             Already have an account?{' '}
-            <Link href="/auth/login" className="font-medium text-gray-900 hover:underline">
+            <Link href="/auth/login" className="ff-link font-medium hover:underline">
               Sign in
             </Link>
           </p>
