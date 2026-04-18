@@ -1,10 +1,30 @@
-export default function Dashboard() {
+'use client'
+
+import { useEffect } from 'react'
+import { useRouter } from 'next/navigation'
+
+import { useSession } from '@/lib/session'
+
+const ROLE_DASHBOARD = {
+  vendor: '/dashboard/vendor',
+  tailor: '/dashboard/tailor',
+  client: '/dashboard/client',
+  admin: '/dashboard/admin',
+}
+
+export default function DashboardEntry() {
+  const router = useRouter()
+  const { role, loading } = useSession()
+
+  useEffect(() => {
+    if (!loading && role && ROLE_DASHBOARD[role]) {
+      router.replace(ROLE_DASHBOARD[role])
+    }
+  }, [loading, role, router])
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50">
-      <div className="text-center">
-        <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
-        <p className="text-gray-500 mt-2">Coming soon — you are logged in!</p>
-      </div>
+    <div className="ff-page-bg flex min-h-screen items-center justify-center">
+      <p className="text-sm ff-text-secondary">Loading your dashboard…</p>
     </div>
   )
 }
