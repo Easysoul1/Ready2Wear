@@ -86,6 +86,29 @@ class AdminUserSerializer(serializers.ModelSerializer):
 class LoginSerializer(TokenObtainPairSerializer):
     username_field = User.EMAIL_FIELD
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields[self.username_field].required = False
+        self.fields['username'] = serializers.CharField(required=False, write_only=True)
+
+    def validate(self, attrs):
+        # Accept either email or username, and normalize values before auth.
+        email = (attrs.get('email') or '').strip()
+        username = (attrs.get('username') or '').strip()
+        credential = email or username
+
+        if not credential:
+            raise serializers.ValidationError({'email': 'Email or username is required.'})
+
+        if '@' in credential:
+            user = User.objects.filter(email__iexact=credential).first()
+        else:
+            user = User.objects.filter(username__iexact=credential).first()
+
+        # TokenObtainPairSerializer authenticates using USERNAME_FIELD (email here).
+        attrs['email'] = user.email if user else credential
+        return super().validate(attrs)
+
     @classmethod
     def get_token(cls, user):
         token = super().get_token(user)

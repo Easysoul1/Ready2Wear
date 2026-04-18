@@ -34,3 +34,36 @@ class AuthApiTests(APITestCase):
         }
         response = self.client.post('/api/auth/register/', payload, format='json')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_login_accepts_case_insensitive_email(self):
+        User.objects.create_user(
+            email='mixedcase@example.com',
+            full_name='Mixed Case',
+            role=User.Role.CLIENT,
+            password='SecurePass123!',
+        )
+
+        login_payload = {'email': '  MIXEDCASE@EXAMPLE.COM ', 'password': 'SecurePass123!'}
+        login_response = self.client.post('/api/auth/login/', login_payload, format='json')
+
+        self.assertEqual(login_response.status_code, status.HTTP_200_OK)
+        payload = login_response.data.get('data', login_response.data)
+        self.assertIn('access', payload)
+        self.assertIn('refresh', payload)
+
+    def test_login_accepts_username(self):
+        User.objects.create_user(
+            email='username-login@example.com',
+            username='TailorPro',
+            full_name='Tailor Pro',
+            role=User.Role.TAILOR,
+            password='SecurePass123!',
+        )
+
+        login_payload = {'username': 'tailorpro', 'password': 'SecurePass123!'}
+        login_response = self.client.post('/api/auth/login/', login_payload, format='json')
+
+        self.assertEqual(login_response.status_code, status.HTTP_200_OK)
+        payload = login_response.data.get('data', login_response.data)
+        self.assertIn('access', payload)
+        self.assertIn('refresh', payload)

@@ -63,6 +63,11 @@ API responses use a consistent JSON envelope:
 - success: `{"success": true, "data": ...}`
 - error: `{"success": false, "errors": ...}`
 
+Auth login notes:
+- `POST /api/auth/login/` accepts `email` + `password`.
+- It also accepts `username` + `password` for compatibility.
+- Email matching is case-insensitive and trims surrounding spaces.
+
 ## Security & Role Rules
 
 - JWT auth via `djangorestframework-simplejwt`
