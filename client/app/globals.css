@@ -1,8 +1,26 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --ff-primary: #1e293b;
+  --ff-primary-hover: #172133;
+  --ff-accent: #d4a373;
+  --ff-accent-hover: #c69261;
+  --ff-background: #f8f9fb;
+  --ff-surface: #ffffff;
+  --ff-text-primary: #0f172a;
+  --ff-text-secondary: #64748b;
+  --ff-border: rgba(15, 23, 42, 0.14);
+  --ff-border-soft: rgba(15, 23, 42, 0.08);
+  --ff-shadow-soft: 0 8px 24px rgba(15, 23, 42, 0.06);
+  --ff-transition: 240ms ease;
+
+  --background: var(--ff-background);
+  --foreground: var(--ff-text-primary);
+
+  --brand: var(--ff-primary);
+  --brand-accent: var(--ff-accent);
+  --surface: var(--ff-surface);
+  --text-muted: var(--ff-text-secondary);
 }
 
 @theme inline {
@@ -12,22 +30,189 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
-:root {
-  --brand: #1a1a2e;
-  --brand-accent: #e94560;
-  --surface: #ffffff;
-  --text-muted: #6b7280;
+.ff-page-bg {
+  background: var(--ff-background);
+  color: var(--ff-text-primary);
+}
+
+.ff-card {
+  background: var(--ff-surface);
+  border: 1px solid var(--ff-border-soft);
+  border-radius: 0.875rem;
+}
+
+.ff-card-elevated {
+  box-shadow: var(--ff-shadow-soft);
+}
+
+.ff-text-primary {
+  color: var(--ff-text-primary);
+}
+
+.ff-text-secondary {
+  color: var(--ff-text-secondary);
+}
+
+.ff-text-accent {
+  color: var(--ff-accent);
+}
+
+.ff-link {
+  color: var(--ff-primary);
+  transition: color var(--ff-transition);
+}
+
+.ff-link:hover {
+  color: var(--ff-primary-hover);
+}
+
+.ff-btn-primary,
+.ff-btn-accent,
+.ff-btn-outline {
+  border-radius: 0.625rem;
+  transition:
+    background-color var(--ff-transition),
+    border-color var(--ff-transition),
+    color var(--ff-transition),
+    opacity var(--ff-transition);
+}
+
+.ff-btn-primary {
+  background: var(--ff-primary);
+  color: #fff;
+  border: 1px solid transparent;
+}
+
+.ff-btn-primary:hover {
+  background: var(--ff-primary-hover);
+}
+
+.ff-btn-accent {
+  background: var(--ff-accent);
+  color: var(--ff-primary);
+  border: 1px solid transparent;
+}
+
+.ff-btn-accent:hover {
+  background: var(--ff-accent-hover);
+}
+
+.ff-btn-outline {
+  background: transparent;
+  color: var(--ff-primary);
+  border: 1px solid var(--ff-border);
+}
+
+.ff-btn-outline:hover {
+  background: rgba(30, 41, 59, 0.06);
+}
+
+.ff-btn-primary:disabled,
+.ff-btn-accent:disabled,
+.ff-btn-outline:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.ff-input {
+  width: 100%;
+  border-radius: 0.625rem;
+  border: 1px solid var(--ff-border);
+  background: var(--ff-surface);
+  color: var(--ff-text-primary);
+  transition:
+    border-color var(--ff-transition),
+    box-shadow var(--ff-transition);
+}
+
+.ff-input:focus {
+  outline: none;
+  border-color: var(--ff-primary);
+  box-shadow: 0 0 0 3px rgba(30, 41, 59, 0.16);
+}
+
+input,
+textarea,
+select {
+  color: var(--ff-text-primary);
+}
+
+input::placeholder,
+textarea::placeholder,
+select::placeholder {
+  color: rgba(100, 116, 139, 0.75);
+}
+
+.ff-alert {
+  border-radius: 0.625rem;
+  border: 1px solid rgba(212, 163, 115, 0.5);
+  background: rgba(212, 163, 115, 0.16);
+  color: var(--ff-primary);
+}
+
+.ff-badge-base {
+  border-radius: 999px;
+  border: 1px solid transparent;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.25rem 0.625rem;
+  text-transform: capitalize;
+}
+
+.ff-badge-primary {
+  border-color: rgba(30, 41, 59, 0.28);
+  background: rgba(30, 41, 59, 0.12);
+  color: var(--ff-primary);
+}
+
+.ff-badge-accent {
+  border-color: rgba(212, 163, 115, 0.55);
+  background: rgba(212, 163, 115, 0.2);
+  color: var(--ff-primary);
+}
+
+.ff-badge-muted {
+  border-color: rgba(15, 23, 42, 0.14);
+  background: rgba(15, 23, 42, 0.05);
+  color: var(--ff-text-secondary);
+}
+
+.ff-table-head {
+  background: rgba(30, 41, 59, 0.04);
+  color: var(--ff-text-secondary);
+}
+
+.ff-table-row {
+  border-top: 1px solid var(--ff-border-soft);
+}
+
+.ff-app-header {
+  background: var(--ff-primary);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.ff-nav-link {
+  display: block;
+  border-radius: 0.625rem;
+  color: var(--ff-text-secondary);
+  padding: 0.5rem 0.75rem;
+  transition:
+    background-color var(--ff-transition),
+    color var(--ff-transition);
+}
+
+.ff-nav-link:hover {
+  background: rgba(30, 41, 59, 0.07);
+  color: var(--ff-text-primary);
+}
+
+.ff-nav-link-active {
+  background: rgba(212, 163, 115, 0.22);
+  color: var(--ff-text-primary);
 }
