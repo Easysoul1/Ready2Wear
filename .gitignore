@@ -1,286 +1,43 @@
 ```
-# Dependencies
-node_modules/
-.jest/
-
-# Logs
-*.log
-
-# Environment variables
-.env.local
-.env.*
-
-# Coverage directory used by tools like istanbul
-coverage/
-
-# nyc test coverage
-.nyc_output/
-
-# Build outputs
-.next/
-out/
-dist/
-build/
-
-# Temporary files
-*.tmp
-*.temp
-
-# OS generated files
-.DS_Store
-Thumbs.db
-
-# Editor files
-.vscode/
-.idea/
-*.swp
-*.swo
-
 # Python
 __pycache__/
-*.pyc
-*.pyo
-*.pyd
+*.py[cod]
+*$py.class
+*.so
 .Python
-env/
-venv/
-.venv/
-pip-log.txt
-pip-delete-this-directory.txt
-.tox/
-.coverage
-.coverage.*
-.cache
-nosetests.xml
-coverage.xml
-*.cover
-*.log
-.gitattributes
-
-# Node.js
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-node_modules/
-.env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
-next.config.js
-package-lock.json
-yarn.lock
-
-# Browser-sync
-.browser-sync*
-
-# Jekyll
-_site/
-
-# ESLint
-.eslintcache
-
-# Prettier
-.prettierignore
-
-# TypeScript
-*.tsbuildinfo
-next-env.d.ts
-
-# Prisma
-prisma/migrations/
-prisma/schema.prisma
-
-# Docker
-.dockerignore
-
-# VS Code
-.vscode/*
-
-# Webpack
-webpack.config.js
-
-# Babel
-.babelrc
-
-# PostCSS
-.postcssrc
-
-# Jest
-.jest/
-
-# Cypress
-cypress/screenshots/
-cypress/videos/
-
-# Storybook
-.storybook-static/
-storybook-static/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
 
 # Database
-*.db
-*.db-journal
+db.sqlite3
 
-# Sensitive files
-.env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
-
-# macOS
-.DS_Store
-
-# Windows
-Thumbs.db
-ehthumbs.db
-Icon?
-!Icon
-
-# Linux
-*~
+# Environment
+.venv/
+venv/
+env/
 
 # IDE
+.vscode/
 .idea/
-*.swp
-*.swo
-
-# Temporary files
-*.tmp
-*.temp
 
 # Logs
 *.log
 
 # Coverage
-coverage/
-*.lcov
-*.info
-
-# Distribution / packaging
-.Python
-env/
-venv/
-.venv/
-pip-log.txt
-pip-delete-this-directory.txt
-.tox/
 .coverage
-.coverage.*
-.cache
-nosetests.xml
-coverage.xml
-*.cover
-
-# Testing
-.pytest_cache/
-.mypy_cache/
-.hypothesis/
-
-# Translations
-*.mo
-*.pot
-
-# Django
-*.log
-local_settings.py
-db.sqlite3
-db.sqlite3-journal
-
-# Flask
-instance/
-.webassets-cache
-
-# Scrapy
-.scrapy
-
-# Sphinx documentation
-docs/_build/
-
-# PyBuilder
-.pybuilder/
-target/
-
-# Jupyter Notebook
-.ipynb_checkpoints
-
-# IPython
-profile_default/
-ipython_config.py
-
-# pyenv
-.python-version
-
-# pipenv
-Pipfile.lock
-
-# PEP 582
-__pypackages__/
-
-# Celery
-celerybeat-schedule
-celerybeat.pid
-
-# Sage
-*.sage.py
-
-# Environments
-.env
-.venv
-env/
-venv/
-ENV/
-env.bak/
-venv.bak/
-
-# Spyder project settings
-.spyderproject
-.spyproject
-
-# Rope project settings
-.ropeproject
-
-# mkdocs documentation
-/site
-
-# mypy
-.mypy_cache/
-.dmypy.json
-dmypy.json
-
-# Pyre
-.pyre/
-
-# Pylance
-.vscode/*.pyc
-
-# FastAPI
-*.svg
-
-# Next.js
-.next/
-out/
-
-# Nuxt.js
-.nuxt/
-dist/
-
-# Gatsby
-.cache/
-public/
-
-# Vue
-dist/
-.vuepress/dist
-.vuepress/.cache
-.vuepress/.temp
-
-# Angular
-angular/
-dist/
-tmp/
-.angular/
-
-# React
-build/
+coverage/
+htmlcov/
 ```
