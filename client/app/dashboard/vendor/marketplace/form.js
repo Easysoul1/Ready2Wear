@@ -6,7 +6,7 @@ import Link from 'next/link'
 import { api } from '@/lib/api'
 import { useSession } from '@/lib/session'
 
-import 'next-cloudinary/dist/cld-upload-widget.css'
+
 
 const DESCRIPTION_MIN = 20
 const DESCRIPTION_MAX = 500

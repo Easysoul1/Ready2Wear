@@ -8,7 +8,7 @@ import StageBadge from '@/components/StageBadge'
 import { api } from '@/lib/api'
 import { useSession } from '@/lib/session'
 
-import 'next-cloudinary/dist/cld-upload-widget.css'
+
 
 const EMPTY_FORM = {
   name: '',

@@ -6,7 +6,7 @@ import AppShell from '@/components/AppShell'
 import { api } from '@/lib/api'
 import { useSession } from '@/lib/session'
 
-import 'next-cloudinary/dist/cld-upload-widget.css'
+
 
 const CATEGORIES = [
   { value: 'womens', label: "Women's" },

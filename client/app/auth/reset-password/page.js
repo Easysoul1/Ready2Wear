@@ -1,11 +1,11 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { Suspense, useState, useEffect } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { api } from '@/lib/api'
 import Link from 'next/link'
 
-export default function ResetPasswordPage() {
+function ResetPasswordForm() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const token = searchParams.get('token')
@@ -166,5 +166,29 @@ export default function ResetPasswordPage() {
         </button>
       </form>
     </div>
+  )
+}
+
+function LoadingState() {
+  return (
+    <div className="ff-card ff-card-elevated p-8">
+      <div className="animate-pulse">
+        <div className="mb-4 h-8 w-48 rounded bg-gray-200"></div>
+        <div className="mb-6 h-4 w-72 rounded bg-gray-200"></div>
+        <div className="space-y-4">
+          <div className="h-10 rounded bg-gray-200"></div>
+          <div className="h-10 rounded bg-gray-200"></div>
+          <div className="h-10 rounded bg-gray-200"></div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+export default function ResetPasswordPage() {
+  return (
+    <Suspense fallback={<LoadingState />}>
+      <ResetPasswordForm />
+    </Suspense>
   )
 }
