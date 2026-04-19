@@ -7,16 +7,9 @@ import AppShell from '@/components/AppShell'
 import { api } from '@/lib/api'
 import { useSession } from '@/lib/session'
 
-const EMPTY_PRODUCT_FORM = {
-  fabric: '',
-  title: '',
-  description: '',
-}
-
 export default function ProductsPage() {
   const { user, role, loading } = useSession()
   const [products, setProducts] = useState([])
-  const [productForm, setProductForm] = useState(EMPTY_PRODUCT_FORM)
   const [error, setError] = useState('')
   const [info, setInfo] = useState('')
 
@@ -37,23 +30,6 @@ export default function ProductsPage() {
     return () => window.clearTimeout(timeoutId)
   }, [user])
 
-  const createProduct = async (event) => {
-    event.preventDefault()
-    setError('')
-    setInfo('')
-    try {
-      await api.post('/api/products/products/', {
-        ...productForm,
-        fabric: Number(productForm.fabric),
-      })
-      setProductForm(EMPTY_PRODUCT_FORM)
-      setInfo('Product published successfully.')
-      await loadProducts()
-    } catch (err) {
-      setError(err?.data?.detail || 'Unable to publish product.')
-    }
-  }
-
   const addToCart = async (productId) => {
     setError('')
     setInfo('')
@@ -72,62 +48,47 @@ export default function ProductsPage() {
       {error ? <p className="ff-alert px-3 py-2 text-sm">{error}</p> : null}
       {info ? <p className="ff-alert px-3 py-2 text-sm">{info}</p> : null}
 
-      {role === 'vendor' ? (
-        <form onSubmit={createProduct} className="ff-card p-4">
-          <h2 className="text-lg font-semibold ff-text-primary">Publish product listing</h2>
-          <div className="mt-4 grid gap-3 md:grid-cols-3">
-            <input
-              required
-              type="number"
-              placeholder="Fabric inventory ID"
-              value={productForm.fabric}
-              onChange={(e) => setProductForm((prev) => ({ ...prev, fabric: e.target.value }))}
-              className="ff-input px-3 py-2 text-sm"
-            />
-            <input
-              required
-              type="text"
-              placeholder="Product title"
-              value={productForm.title}
-              onChange={(e) => setProductForm((prev) => ({ ...prev, title: e.target.value }))}
-              className="ff-input px-3 py-2 text-sm"
-            />
-            <button
-              type="submit"
-              className="ff-btn-primary px-3 py-2 text-sm font-semibold"
-            >
-              Publish
-            </button>
-          </div>
-          <textarea
-            placeholder="Description"
-            value={productForm.description}
-            onChange={(e) => setProductForm((prev) => ({ ...prev, description: e.target.value }))}
-            className="ff-input mt-3 min-h-24 px-3 py-2 text-sm"
-          />
-        </form>
-      ) : null}
-
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
         {products.map((product) => (
-          <article key={product.id} className="ff-card p-4">
-            <p className="text-sm ff-text-secondary">{product.vendor_name}</p>
-            <h3 className="mt-1 text-lg font-semibold ff-text-primary">{product.title}</h3>
-            <p className="mt-2 text-sm ff-text-secondary">{product.description || 'No description.'}</p>
-            <p className="mt-3 text-sm font-medium ff-text-primary">
-              ₦{product.unit_price} · {product.stock_quantity} {product.fabric_unit}
-            </p>
-            <Link href={`/products/${product.id}`} className="ff-link mt-3 inline-block text-xs hover:underline">
-              View details
-            </Link>
-            {role !== 'vendor' && role !== 'admin' ? (
-              <button
-                onClick={() => addToCart(product.id)}
-                className="ff-btn-outline mt-3 px-3 py-2 text-sm"
-              >
-                Add to cart
-              </button>
-            ) : null}
+          <article key={product.id} className="ff-card overflow-hidden border border-[color:var(--ff-border-soft)] hover:border-[color:var(--ff-accent)] transition">
+            {product.images?.length > 0 && product.images[0]?.url ? (
+              <img
+                src={product.images[0].url}
+                alt={product.title}
+                className="w-full h-48 object-cover border-b border-[color:var(--ff-border-soft)]"
+              />
+            ) : (
+              <div className="w-full h-48 bg-[color:var(--ff-bg-alt)] flex items-center justify-center border-b border-[color:var(--ff-border-soft)]">
+                <span className="text-gray-500 text-xs text-center uppercase tracking-widest">No Image provided</span>
+              </div>
+            )}
+            <div className="p-4">
+              <p className="text-xs tracking-wide uppercase ff-text-accent font-semibold">{product.vendor_name}</p>
+              <h3 className="mt-1 text-lg font-bold ff-text-primary leading-tight">{product.title}</h3>
+              <p className="mt-2 text-sm text-gray-400 line-clamp-2">{product.description || 'No description provided.'}</p>
+              <div className="mt-4 flex items-center justify-between">
+                <p className="text-sm font-medium ff-text-primary">
+                  <span className="text-lg">₦{product.unit_price}</span> <span className="text-gray-500 text-xs ml-1">/ {product.fabric_unit}</span>
+                </p>
+                <p className="text-xs bg-[color:var(--ff-bg-card)] px-2 py-1 rounded-md text-gray-400">
+                  {product.stock_quantity} left
+                </p>
+              </div>
+              
+              <div className="mt-5 flex gap-2 w-full">
+                <Link href={`/products/${product.id}`} className="ff-btn-outline flex-1 text-center py-2 text-sm">
+                  View details
+                </Link>
+                {role !== 'vendor' && role !== 'admin' ? (
+                  <button
+                    onClick={() => addToCart(product.id)}
+                    className="ff-btn-primary flex-1 py-2 text-sm"
+                  >
+                    Add to cart
+                  </button>
+                ) : null}
+              </div>
+            </div>
           </article>
         ))}
       </div>

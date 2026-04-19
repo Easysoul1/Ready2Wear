@@ -52,6 +52,8 @@ class User(AbstractUser):
     full_name = models.CharField(max_length=255, blank=True, default='')
     role = models.CharField(max_length=20, choices=Role.choices, default=Role.CLIENT, db_index=True)
     phone = models.CharField(max_length=20, blank=True)
+    reset_token_hash = models.CharField(max_length=128, blank=True, default='')
+    reset_token_expiry = models.DateTimeField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
     updated_at = models.DateTimeField(auto_now=True, null=True, blank=True)
 

@@ -30,9 +30,11 @@ export default function AuthLayout({ children }) {
         <div className="w-full max-w-md">
           {/* Mobile logo */}
           <div className="lg:hidden text-center mb-8">
-            <span className="text-2xl font-bold text-[color:var(--ff-primary)]">
-              Fashion<span className="ff-text-accent">Flow</span>
-            </span>
+            <Link href="/">
+              <span className="text-2xl font-bold text-[color:var(--ff-primary)]">
+                Fashion<span className="ff-text-accent">Flow</span>
+              </span>
+            </Link>
           </div>
           {children}
         </div>

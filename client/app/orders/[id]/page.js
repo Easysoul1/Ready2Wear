@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
+import { use } from 'react'
 
 import AppShell from '@/components/AppShell'
 import StageBadge from '@/components/StageBadge'
@@ -10,17 +11,18 @@ import { api } from '@/lib/api'
 import { useSession } from '@/lib/session'
 
 export default function OrderDetailPage({ params }) {
+  const resolvedParams = use(params)
   const { user, role, loading } = useSession()
   const [order, setOrder] = useState(null)
   const [error, setError] = useState('')
 
   useEffect(() => {
-    if (!user) return
+    if (!user || !resolvedParams.id) return
     api
-      .get(`/api/orders/orders/${params.id}/`)
+      .get(`/api/orders/orders/${resolvedParams.id}/`)
       .then((res) => setOrder(res))
       .catch((err) => setError(err?.data?.detail || 'Unable to load order details.'))
-  }, [params.id, user])
+  }, [resolvedParams.id, user])
 
   if (loading) return null
 

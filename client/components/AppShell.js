@@ -14,12 +14,15 @@ const ROLE_LINKS = {
   ],
   vendor: [
     { href: '/dashboard/vendor', label: 'Dashboard' },
-    { href: '/products', label: 'Products' },
-    { href: '/orders', label: 'Tailor Orders' },
+    { href: '/dashboard/vendor/products', label: 'My Products' },
+    { href: '/dashboard/vendor/orders', label: 'Fabric Orders' },
+    { href: '/products', label: 'Marketplace' },
+    { href: '/orders', label: 'Tailor Progress' },
     { href: '/notifications', label: 'Notifications' },
   ],
   tailor: [
     { href: '/dashboard/tailor', label: 'Dashboard' },
+    { href: '/dashboard/tailor/ready-made', label: 'My Ready-Made' },
     { href: '/orders', label: 'Orders' },
     { href: '/products', label: 'Marketplace' },
     { href: '/cart', label: 'Cart' },

@@ -1,6 +1,38 @@
 from rest_framework import serializers
 
-from .models import FabricItem, InventoryEvent, PriceHistory, VendorProfile
+from .models import CloudinaryImage, FabricItem, InventoryEvent, PriceHistory, VendorMarketplaceItem, VendorProfile
+
+
+class CloudinaryImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CloudinaryImage
+        fields = ['id', 'public_id', 'url', 'secure_url', 'created_at']
+        read_only_fields = ['id', 'created_at']
+
+
+class VendorMarketplaceItemSerializer(serializers.ModelSerializer):
+    images = CloudinaryImageSerializer(many=True, read_only=True)
+    vendor_name = serializers.CharField(source='vendor.business_name', read_only=True)
+
+    class Meta:
+        model = VendorMarketplaceItem
+        fields = [
+            'id', 'vendor', 'vendor_name', 'title', 'fabric_type', 'price', 'quantity',
+            'description', 'images', 'is_active', 'created_at', 'updated_at',
+        ]
+        read_only_fields = ['id', 'vendor', 'created_at', 'updated_at']
+
+
+class VendorMarketplaceItemCreateSerializer(serializers.Serializer):
+    title = serializers.CharField(max_length=200)
+    fabric_type = serializers.CharField(max_length=100)
+    price = serializers.DecimalField(max_digits=10, decimal_places=2)
+    quantity = serializers.DecimalField(max_digits=12, decimal_places=2)
+    description = serializers.CharField(max_length=500, required=False, allow_blank=True)
+    images = serializers.ListField(
+        child=serializers.DictField(),
+        required=False,
+    )
 
 
 class PriceHistorySerializer(serializers.ModelSerializer):

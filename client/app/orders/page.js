@@ -17,6 +17,7 @@ export default function OrdersPage() {
   const [tailors, setTailors] = useState([])
   const [error, setError] = useState('')
   const [info, setInfo] = useState('')
+  const [showHint, setShowHint] = useState(false)
   const [form, setForm] = useState({
     title: '',
     client: '',
@@ -182,12 +183,46 @@ export default function OrdersPage() {
               </select>
             ) : null}
           </div>
-          <textarea
-            value={form.style_notes}
-            onChange={(e) => setForm((prev) => ({ ...prev, style_notes: e.target.value }))}
-            placeholder="Style notes"
-            className="ff-input mt-3 min-h-20 px-3 py-2 text-sm"
-          />
+          <div className="mt-3 col-span-1 md:col-span-2">
+            <div className="flex justify-between items-center mb-1">
+              <label className="block text-sm font-medium ff-text-primary">
+                Style Notes & Description
+              </label>
+              <button
+                type="button"
+                onClick={() => setShowHint(!showHint)}
+                className="text-xs text-[color:var(--ff-accent)] hover:underline"
+              >
+                {showHint ? 'Hide tips' : 'Show tips'}
+              </button>
+            </div>
+            {showHint && (
+              <div className="bg-[rgba(212,163,115,0.1)] p-3 rounded text-xs mb-2 border border-[rgba(212,163,115,0.2)]">
+                <p className="font-medium ff-text-primary mb-1">Good examples:</p>
+                <ul className="list-disc pl-4 ff-text-secondary space-y-1">
+                  <li>"Agbada should be ankle length, slightly loose on the chest. Add inner pockets."</li>
+                  <li>"Make the sleeves 3/4 length. Use simple straight cut, no extra embroidery."</li>
+                </ul>
+                <p className="font-medium ff-text-primary mt-2 mb-1">Avoid:</p>
+                <ul className="list-disc pl-4 ff-text-secondary">
+                  <li>"Just make it nice"</li>
+                  <li>"V-neck" (without specifying depth or width)</li>
+                </ul>
+              </div>
+            )}
+            <textarea
+              value={form.style_notes}
+              onChange={(e) => setForm((prev) => ({ ...prev, style_notes: e.target.value }))}
+              placeholder="Detailed description of the style (minimum 20 characters recommended)..."
+              className="ff-input min-h-[100px] w-full px-3 py-2 text-sm"
+            />
+            {form.style_notes.length > 20 && (
+              <div className="mt-2 p-3 bg-white/5 rounded-md border border-[color:var(--ff-border-soft)]">
+                <p className="text-xs font-medium text-gray-500 mb-1 uppercase tracking-wider">Preview:</p>
+                <p className="text-sm ff-text-primary italic">"{form.style_notes}"</p>
+              </div>
+            )}
+          </div>
           <textarea
             value={form.measurements}
             onChange={(e) => setForm((prev) => ({ ...prev, measurements: e.target.value }))}

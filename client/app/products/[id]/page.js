@@ -2,24 +2,26 @@
 
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
+import { use } from 'react'
 
 import AppShell from '@/components/AppShell'
 import { api } from '@/lib/api'
 import { useSession } from '@/lib/session'
 
 export default function ProductDetailPage({ params }) {
+  const resolvedParams = use(params)
   const { user, role, loading } = useSession()
   const [product, setProduct] = useState(null)
   const [error, setError] = useState('')
   const [info, setInfo] = useState('')
 
   useEffect(() => {
-    if (!user) return
+    if (!user || !resolvedParams.id) return
     api
-      .get(`/api/products/products/${params.id}/`)
+      .get(`/api/products/products/${resolvedParams.id}/`)
       .then((res) => setProduct(res))
       .catch((err) => setError(err?.data?.detail || 'Unable to load product details.'))
-  }, [params.id, user])
+  }, [resolvedParams.id, user])
 
   const addToCart = async () => {
     setError('')

@@ -9,7 +9,9 @@ export default function Home() {
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center gap-2">
               {/* <div className="w-8 h-8 rounded-lg" style={{ background: 'var(--brand)' }}></div> */}
-              <span className="text-xl font-bold text-gray-900">FashionFlow</span>
+              <Link href="/">
+                <span className="text-xl font-bold text-gray-900">FashionFlow</span>
+              </Link>
             </div>
             <div className="flex items-center gap-4">
               <Link 
